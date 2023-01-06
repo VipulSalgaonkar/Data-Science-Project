@@ -1,7 +1,8 @@
 from sklearn.preprocessing import LabelEncoder
 import pandas as pd
-from load import load_data,train_path,test_path
 
+from load import load_data,train_path,test_path
+from featureengineering import time_based_feature_Engineering  
 
 
 # 1.Preprocessing First
@@ -182,8 +183,12 @@ def airline_handle_categorical_data(df, target):
 
 
 if __name__ == "__main__":
+    target = "Price"
     df = load_data(train_path)
     df = sanity_check(df, train=True)
-    print(df.info())
-
+    handle_missing_value(df)
+    df, encoded_dict = airline_handle_categorical_data(df,target)
+    final_df = time_based_feature_Engineering(df)
+    print(final_df.info())
+    print(encoded_dict)
 
